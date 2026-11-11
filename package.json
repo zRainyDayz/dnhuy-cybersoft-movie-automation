@@ -1,0 +1,30 @@
+{
+  "name": "cybersoft-movie-automation",
+  "version": "1.0.0",
+  "description": "Playwright + TypeScript Page Object Model framework for the Cybersoft movie booking demo (demo1.cybersoft.edu.vn)",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:stable": "playwright test --grep-invert @bug",
+    "test:bugs": "playwright test --grep @bug",
+    "test:headed": "playwright test --headed --workers=1",
+    "test:chrome": "playwright test --project=chromium",
+    "test:mobile": "playwright test --project=mobile",
+    "report": "playwright show-report reports/html",
+    "allure:run": "cross-env ALLURE=1 playwright test",
+    "allure:report": "allure generate reports/allure-results -o reports/allure-report --clean && allure open reports/allure-report",
+    "clean": "rimraf reports logs screenshots test-results",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^20.11.0",
+    "allure-commandline": "^2.30.0",
+    "allure-playwright": "^3.0.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.0"
+  }
+}
