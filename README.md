@@ -38,6 +38,24 @@ Optional Allure: `npm run allure:run` then `npm run allure:report` (needs Java).
 **Expected result of `npm test`:** ~60 passed, ~16 failed. Every failure is a test tagged `@bug`, i.e. a real defect
 of the website (see the *Bugs* tab of the workbook), with screenshot, video and trace attached in the report.
 
+## Where the results go (and what is kept between runs)
+
+| Folder / file | On each `npm test` |
+|---|---|
+| `reports/html/` | **Replaced** with the new HTML report (`npm run report` opens it) |
+| `reports/results.json`, `reports/junit.xml`, `reports/summary.md` | **Overwritten** with the new run |
+| `test-results/` | **Emptied at the start** of each run; holds the run's videos, traces and Playwright screenshots |
+| `screenshots/` | **Kept.** New failure screenshots are added, each named `<TC_ID>_<project>_<timestamp>.png` |
+| `logs/` | **Kept.** Each run adds its own `run-<date-time>.log` |
+
+So `reports/` always shows only the latest run, while `screenshots/` and `logs/` keep a history.
+For a fully clean run: `npm run clean` then `npm test`. None of these folders are committed (`.gitignore`).
+
+Results can differ slightly from run to run because the demo site and its database are shared and live
+(other users book seats, showtimes and prices change, the site is sometimes slow). The suite is built for that:
+it picks a showtime with free seats at run time, reads prices from the API and creates its own accounts.
+The 16 `@bug` tests should fail on every run until the site is fixed; a single timeout usually passes on rerun.
+
 ## Manual testing deliverables
 
 | File | Content |
