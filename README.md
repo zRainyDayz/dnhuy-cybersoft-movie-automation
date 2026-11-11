@@ -13,21 +13,38 @@ built with **Playwright + TypeScript** using the **Page Object Model**.
 
 ## Quick start
 
+Requirements: Node.js 18+ (LTS recommended) and Git.
+
 ```bash
-git clone <your-public-repo-url>
-cd cybersoft-movie-automation
+git clone https://github.com/zRainyDayz/dnhuy-cybersoft-movie-automation.git
+cd dnhuy-cybersoft-movie-automation
 npm install
 npx playwright install chromium
-cp .env.example .env        # optional, defaults already point to demo1
 
-npm test                    # everything (desktop + mobile)
-npm run test:smoke          # sanity path only (@smoke)
-npm run test:stable         # everything except known-bug tests
-npm run test:bugs           # only tests that reproduce open bugs (expected to FAIL)
+npm test                    # all 76 tests (desktop + mobile), ~3-6 min
+npm run test:smoke          # 11 core-path tests
+npm run test:stable         # everything except known-bug tests -> should be all green
+npm run test:bugs           # only the 16 tests that reproduce open bugs (expected to FAIL)
+npx playwright test --ui    # visual mode: pick a test and watch every step
 npm run report              # open the HTML report
 ```
 
+> **Windows PowerShell:** if you get *"running scripts is disabled on this system"*, use `npm.cmd` / `npx.cmd`
+> (e.g. `npm.cmd test`) or run the commands in Command Prompt.
+
+No account or `.env` is needed: tests register their own throwaway customer accounts on the demo site.
 Optional Allure: `npm run allure:run` then `npm run allure:report` (needs Java).
+
+**Expected result of `npm test`:** ~60 passed, ~16 failed. Every failure is a test tagged `@bug`, i.e. a real defect
+of the website (see the *Bugs* tab of the workbook), with screenshot, video and trace attached in the report.
+
+## Manual testing deliverables
+
+| File | Content |
+|---|---|
+| `docs/Cybersoft_Movie_Testing_Workbook.xlsx` | Summary, 94 test cases with execution results, 18 bug reports, user stories, test data, automation map |
+| `Test Plan & Report – Cybersoft Movie Booking (demo1).pdf` | Epic flow, scope, approach, entry/exit criteria, risks, test report |
+| `Cybersoft Movie Booking – Testing & Automation Framework.pdf` | Presentation slides |
 
 ## Project structure
 

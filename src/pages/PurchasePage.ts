@@ -45,7 +45,10 @@ export class PurchasePage extends BasePage {
     return Number(text);
   }
 
+  /** Background colour of a seat, read with the mouse moved away so the hover shade does not interfere. */
   async seatBackground(tenGhe: string): Promise<string> {
+    await this.page.mouse.move(0, 0);
+    await this.page.waitForTimeout(400); // let the hover transition finish
     return this.seat(tenGhe).evaluate(el => getComputedStyle(el).backgroundColor);
   }
 }

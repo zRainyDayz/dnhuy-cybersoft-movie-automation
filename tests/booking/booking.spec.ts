@@ -1,5 +1,5 @@
 import { test, expect } from '../../src/fixtures/test-fixtures';
-import { MSG, PRICE, REF } from '../../src/data/testData';
+import { MSG, REF } from '../../src/data/testData';
 import type { SeatMap, Seat } from '../../src/api/MovieApi';
 
 const GREEN = 'rgb(0, 128, 0)';
@@ -39,13 +39,14 @@ test.describe('US07 - Seat selection & booking', () => {
     await purchasePage.toggleSeat(seat.tenGhe);
     expect(await purchasePage.seatBackground(seat.tenGhe)).toBe(GREEN);
     await expect(purchasePage.info('Chọn')).toContainText(`Ghế ${seat.stt}`);
-    expect(await purchasePage.totalAmount()).toBe(PRICE.normal);
+    // Prices are set per showtime, so the expected price comes from the seat-map API
+    expect(await purchasePage.totalAmount()).toBe(seat.giaVe);
   });
 
   test('TC_BOOK_04 Selecting a VIP seat adds the VIP price', async ({ purchasePage }) => {
     await purchasePage.toggleSeat(normal[0].tenGhe);
     await purchasePage.toggleSeat(vip[0].tenGhe);
-    expect(await purchasePage.totalAmount()).toBe(PRICE.normal + PRICE.vip);
+    expect(await purchasePage.totalAmount()).toBe(normal[0].giaVe + vip[0].giaVe);
   });
 
   test('TC_BOOK_05 Clicking a selected seat again removes it', async ({ purchasePage }) => {
@@ -54,7 +55,7 @@ test.describe('US07 - Seat selection & booking', () => {
     await purchasePage.toggleSeat(b.tenGhe);
     await purchasePage.toggleSeat(a.tenGhe);
     await expect(purchasePage.info('Chọn')).not.toContainText(`Ghế ${a.stt},`);
-    expect(await purchasePage.totalAmount()).toBe(PRICE.normal);
+    expect(await purchasePage.totalAmount()).toBe(b.giaVe);
     await purchasePage.toggleSeat(b.tenGhe);
     expect(await purchasePage.totalAmount()).toBe(0);
   });

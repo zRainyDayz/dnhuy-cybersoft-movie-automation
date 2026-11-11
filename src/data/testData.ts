@@ -21,7 +21,8 @@ export const MSG = {
   notFound: '404: The page you are looking for isn’t here',
 };
 
-export const PRICE = { normal: 75000, vip: 90000 };
+/** Example prices of showtime 44807; prices differ per showtime, so tests read them from the API. */
+export const PRICE_EXAMPLE_44807 = { normal: 75000, vip: 90000 };
 
 /** Stable reference data observed on the demo site (Nov 2026). */
 export const REF = {
